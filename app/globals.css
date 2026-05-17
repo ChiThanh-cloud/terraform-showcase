@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 218 35% 7%;
+    --foreground: 210 40% 98%;
+    --card: 220 31% 10%;
+    --card-foreground: 210 40% 98%;
+    --primary: 177 72% 50%;
+    --primary-foreground: 210 40% 8%;
+    --secondary: 222 24% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 220 22% 15%;
+    --muted-foreground: 215 20% 67%;
+    --accent: 145 64% 45%;
+    --accent-foreground: 210 40% 6%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 20% 23%;
+    --input: 217 20% 23%;
+    --ring: 177 72% 50%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background:
+      radial-gradient(circle at top left, rgba(20, 184, 166, 0.16), transparent 28rem),
+      radial-gradient(circle at 80% 10%, rgba(56, 189, 248, 0.12), transparent 26rem),
+      #070b14;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .dashboard-grid {
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+
+  .fine-grid {
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  .mask-fade {
+    mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  }
+}
