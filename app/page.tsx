@@ -28,7 +28,6 @@ import {
   Zap
 } from "lucide-react";
 import { AnimatedGrid } from "@/components/magic/animated-grid";
-import { NumberTicker } from "@/components/magic/number-ticker";
 import { SectionShell } from "@/components/magic/section-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -47,7 +46,6 @@ const navItems = [
   ["AWS", "#services"],
   ["Kiến trúc", "#architecture"],
   ["CI/CD", "#pipeline"],
-  ["Giám sát", "#monitoring"],
   ["Bảo mật", "#security"]
 ];
 
@@ -73,6 +71,45 @@ const problems = [
     icon: Network,
     title: "Độ phức tạp triển khai",
     text: "Hệ thống AWS hiện đại kết nối edge, compute, dữ liệu, bảo mật và quan sát, cần triển khai có điều phối."
+  }
+];
+
+const researchScope = [
+  {
+    icon: Zap,
+    title: "Tính cấp thiết",
+    text: "Infrastructure as Code giúp giảm sai sót cấu hình thủ công, tăng tính nhất quán giữa các môi trường và rút ngắn thời gian triển khai dịch vụ cloud."
+  },
+  {
+    icon: Radar,
+    title: "Mục tiêu nghiên cứu",
+    text: "Nghiên cứu mô hình IaC và ứng dụng Terraform để tự động hóa cấu hình, quản lý hạ tầng, tăng độ ổn định, khả năng mở rộng và hiệu quả vận hành."
+  },
+  {
+    icon: Cloud,
+    title: "Phạm vi đề tài",
+    text: "Tập trung triển khai hạ tầng cloud bằng Terraform thông qua mã nguồn, không đi sâu vào phát triển ứng dụng hoặc kỹ thuật lập trình nâng cao."
+  }
+];
+
+const iacToolComparison = [
+  {
+    name: "Terraform",
+    focus: "Quản lý hạ tầng cloud",
+    model: "Declarative",
+    highlight: "Phù hợp IaC, module hóa và workflow CI/CD."
+  },
+  {
+    name: "Ansible",
+    focus: "Cấu hình phần mềm và quản trị hệ thống",
+    model: "Procedural",
+    highlight: "Mạnh về automation vận hành sau khi tài nguyên đã sẵn sàng."
+  },
+  {
+    name: "CloudFormation",
+    focus: "Triển khai hạ tầng AWS-native",
+    model: "Declarative",
+    highlight: "Tích hợp sâu với AWS nhưng giới hạn trong hệ sinh thái AWS."
   }
 ];
 
@@ -105,13 +142,6 @@ const pipeline = [
   ["Terraform Apply", Rocket],
   ["Triển khai AWS", Cloud],
   ["Giám sát CloudWatch", Radar]
-];
-
-const metrics = [
-  { label: "Requests qua ALB", value: 12840, suffix: "/phút", tone: "cyan" },
-  { label: "Sức khỏe EC2", value: 99, suffix: "%", tone: "emerald" },
-  { label: "CPU EC2 trung bình", value: 42, suffix: "%", tone: "amber" },
-  { label: "Độ trễ P95", value: 184, suffix: "ms", tone: "orange" }
 ];
 
 const architectureAlerts = [
@@ -225,41 +255,6 @@ function FadeCard({
     </motion.div>
   );
 }
-
-function MetricTile({
-  label,
-  value,
-  suffix,
-  tone
-}: {
-  label: string;
-  value: number;
-  suffix: string;
-  tone: string;
-}) {
-  return (
-    <Card className="overflow-hidden">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">{label}</p>
-          <span
-            className={cn(
-              "size-2 rounded-full",
-              tone === "emerald" && "bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.85)]",
-              tone === "amber" && "bg-amber-300 shadow-[0_0_12px_rgba(252,211,77,0.85)]",
-              tone === "orange" && "bg-orange-300 shadow-[0_0_12px_rgba(253,186,116,0.85)]",
-              tone === "cyan" && "bg-cyan-300 shadow-[0_0_12px_rgba(103,232,249,0.85)]"
-            )}
-          />
-        </div>
-        <div className="mt-4 font-mono text-2xl font-semibold">
-          <NumberTicker value={value} suffix={suffix} />
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
 
 function Hero() {
   return (
@@ -625,6 +620,130 @@ export default function Home() {
       </SectionShell>
 
       <SectionShell
+        id="scope"
+        eyebrow="Phạm vi đề tài"
+        title="Đề tài tập trung vào IaC để chuẩn hóa triển khai hạ tầng cloud bằng Terraform."
+        description="Nội dung từ phạm vi nghiên cứu được đưa vào như một lớp bối cảnh: vì sao đề tài cần thiết, mục tiêu cần đạt và ranh giới triển khai trong môi trường cloud."
+        className="bg-slate-950/35"
+      >
+        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+          <div className="grid gap-4">
+            {researchScope.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <FadeCard key={item.title} delay={index * 0.06}>
+                  <Card className="h-full overflow-hidden border-cyan-300/20 bg-slate-950/78">
+                    <CardHeader className="flex-row items-start gap-4 space-y-0">
+                      <div className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-cyan-300/25 bg-cyan-300/10 text-cyan-100">
+                        <Icon className="size-5" />
+                      </div>
+                      <div>
+                        <CardTitle>{item.title}</CardTitle>
+                        <CardDescription className="mt-2 leading-6">{item.text}</CardDescription>
+                      </div>
+                    </CardHeader>
+                  </Card>
+                </FadeCard>
+              );
+            })}
+          </div>
+
+          <FadeCard delay={0.08}>
+            <Card className="relative h-full overflow-hidden bg-slate-950/85">
+              <AnimatedGrid className="opacity-20" />
+              <CardHeader className="relative border-b border-border/70">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <CardTitle>So sánh công cụ IaC</CardTitle>
+                    <CardDescription className="mt-2">
+                      Terraform, Ansible và CloudFormation khác nhau ở phạm vi tự động hóa và cách mô tả hệ thống.
+                    </CardDescription>
+                  </div>
+                  <Badge variant="secondary">
+                    <FileCode2 className="size-3" />
+                    IaC analysis
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="relative p-0">
+                <div className="grid border-b border-border/70 bg-secondary/35 text-sm font-semibold sm:grid-cols-[0.85fr_1.2fr_0.85fr_1.2fr]">
+                  <div className="p-4 text-muted-foreground">Công cụ</div>
+                  <div className="border-t border-border/60 p-4 text-muted-foreground sm:border-l sm:border-t-0">
+                    Trọng tâm
+                  </div>
+                  <div className="border-t border-border/60 p-4 text-muted-foreground sm:border-l sm:border-t-0">
+                    Cách tiếp cận
+                  </div>
+                  <div className="border-t border-border/60 p-4 text-muted-foreground sm:border-l sm:border-t-0">
+                    Ghi chú
+                  </div>
+                </div>
+                {iacToolComparison.map((tool, index) => (
+                  <motion.div
+                    key={tool.name}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.35, delay: index * 0.045 }}
+                    className="grid border-b border-border/50 text-sm last:border-b-0 sm:grid-cols-[0.85fr_1.2fr_0.85fr_1.2fr]"
+                  >
+                    <div className="p-4 font-semibold text-cyan-50">{tool.name}</div>
+                    <div className="border-t border-border/50 p-4 text-muted-foreground sm:border-l sm:border-t-0">
+                      {tool.focus}
+                    </div>
+                    <div className="border-t border-border/50 p-4 sm:border-l sm:border-t-0">
+                      <span
+                        className={cn(
+                          "rounded-md border px-2.5 py-1 font-mono text-[11px]",
+                          tool.model === "Declarative"
+                            ? "border-cyan-300/30 bg-cyan-300/10 text-cyan-100"
+                            : "border-orange-300/30 bg-orange-300/10 text-orange-100"
+                        )}
+                      >
+                        {tool.model}
+                      </span>
+                    </div>
+                    <div className="border-t border-border/50 p-4 text-muted-foreground sm:border-l sm:border-t-0">
+                      {tool.highlight}
+                    </div>
+                  </motion.div>
+                ))}
+              </CardContent>
+            </Card>
+          </FadeCard>
+        </div>
+
+        <FadeCard delay={0.12}>
+          <Card className="mt-6 overflow-hidden border-orange-300/20 bg-orange-300/[0.035]">
+            <CardHeader>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-lg border border-cyan-300/20 bg-slate-950/68 p-4">
+                  <Badge>
+                    <CheckCircle2 className="size-3" />
+                    Declarative
+                  </Badge>
+                  <CardTitle className="mt-4 text-xl">Mô tả trạng thái mong muốn</CardTitle>
+                  <CardDescription className="mt-2 leading-6">
+                    Người dùng khai báo hệ thống cần đạt trạng thái nào; công cụ tự tính toán các bước để đưa hạ tầng đến trạng thái đó.
+                  </CardDescription>
+                </div>
+                <div className="rounded-lg border border-orange-300/20 bg-slate-950/68 p-4">
+                  <Badge variant="secondary">
+                    <TerminalSquare className="size-3" />
+                    Procedural
+                  </Badge>
+                  <CardTitle className="mt-4 text-xl">Mô tả từng bước thực hiện</CardTitle>
+                  <CardDescription className="mt-2 leading-6">
+                    Người dùng định nghĩa trình tự thao tác cụ thể; cách này phù hợp với các tác vụ cấu hình và vận hành hệ thống.
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+        </FadeCard>
+      </SectionShell>
+
+      <SectionShell
         id="terraform"
         eyebrow="Vì sao chọn Terraform"
         title="Terraform biến hạ tầng AWS thành mã tự động, dễ lặp lại và dễ review."
@@ -678,7 +797,7 @@ export default function Home() {
       <SectionShell
         id="services"
         eyebrow="Dịch vụ AWS"
-        title="Phần trình diễn kết nối edge, compute, scaling, dữ liệu, bảo mật và observability."
+        title="Các dịch vụ AWS dự kiến sẽ được triển khai bằng Terraform"
         description="Mỗi card dịch vụ đại diện cho một phần của nền tảng AWS kiểu production được tự động hóa bằng Terraform."
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -730,74 +849,6 @@ export default function Home() {
               </Card>
             </FadeCard>
           ))}
-        </div>
-      </SectionShell>
-
-      <SectionShell
-        id="monitoring"
-        eyebrow="Giám sát"
-        title="CloudWatch cung cấp khả năng quan sát sau mỗi lần triển khai."
-        description="Metrics, logs, health checks, tín hiệu hiệu năng và alarms biến hạ tầng thành một nền tảng có thể quan sát."
-        className="bg-slate-950/35"
-      >
-        <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
-          <Card className="overflow-hidden">
-            <CardHeader className="border-b border-border/70">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Dashboard vận hành CloudWatch</CardTitle>
-                  <CardDescription>Widget kiểu live cho service health và theo dõi hiệu năng.</CardDescription>
-                </div>
-                <Badge variant="success">
-                  <Activity className="size-3" />
-                  đang stream
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="p-5">
-              <div className="grid gap-4 sm:grid-cols-2">
-                {metrics.map((metric) => (
-                  <MetricTile key={metric.label} {...metric} />
-                ))}
-              </div>
-              <div className="mt-5 h-48 rounded-lg border border-border/70 bg-background/45 p-4 fine-grid">
-                <div className="flex h-full items-end gap-2">
-                  {[38, 48, 44, 62, 54, 73, 58, 82, 64, 71, 51, 68, 60, 76].map(
-                    (height, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ height: 0 }}
-                        whileInView={{ height: `${height}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: index * 0.035 }}
-                        className="flex-1 rounded-t-sm bg-gradient-to-t from-cyan-400/30 via-blue-300/70 to-orange-300/85"
-                      />
-                    )
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <div className="grid gap-4">
-            {[
-              [BellRing, "Alarms", "Threshold cảnh báo thông báo cho đội vận hành về CPU, target health, lỗi 5xx và độ trễ."],
-              [HardDrive, "Logs", "Logs ứng dụng và hạ tầng được tập trung để phục vụ điều tra sự cố."],
-              [Activity, "Theo dõi sức khỏe", "EC2 instance health và trạng thái ALB target thể hiện độ ổn định runtime."],
-              [Radar, "Tầm nhìn hạ tầng", "Dashboard giúp tài nguyên đã triển khai dễ theo dõi hơn sau mỗi lần apply."]
-            ].map(([Icon, title, text]) => (
-              <Card key={title as string}>
-                <CardHeader className="flex-row items-start gap-4 space-y-0">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-200">
-                    <Icon className="size-5" />
-                  </div>
-                  <div>
-                    <CardTitle>{title as string}</CardTitle>
-                    <CardDescription className="mt-2">{text as string}</CardDescription>
-                  </div>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
         </div>
       </SectionShell>
 
